@@ -1,0 +1,36 @@
+# requirements-compatible.txt - Dependency-resolved requirements
+# Core Flask dependencies
+flask==3.0.0
+flask-sqlalchemy==3.1.1
+python-dotenv==1.0.0
+
+# Data processing (compatible versions)
+pandas>=2.1.0
+numpy>=1.24.0
+
+# OpenAI and related packages (using compatible versions)
+openai>=1.5.0,<2.0.0  # This satisfies both llama-index and crewai requirements
+
+# LlamaIndex (compatible with OpenAI 1.5+)
+llama-index>=0.9.0
+
+# Weaviate client
+weaviate-client>=3.25.0
+
+# CrewAI (requires OpenAI 1.5+)
+crewai>=0.1.0
+
+# Experiment tracking
+comet-ml>=3.35.0
+
+# Other dependencies
+requests>=2.31.0
+arxiv>=2.0.0
+pydantic>=2.5.0
+huggingface-hub>=0.19.0
+
+# Optional dependencies
+beautifulsoup4>=4.12.0
+selenium>=4.15.0
+celery>=5.3.0
+redis>=5.0.0

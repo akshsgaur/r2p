@@ -1,0 +1,391 @@
+<!-- templates/new_project.html - Enhanced project creation form -->
+{% extends "base.html" %}
+
+{% block title %}Create New Project{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2><i class="fas fa-plus-circle"></i> Create New Research Project</h2>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Project Title</label>
+                        <input type="text" class="form-control" id="title" name="title" required
+                               placeholder="Enter a descriptive title for your research project">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="4" required
+                                  placeholder="Describe the goals and scope of your research project"></textarea>
+                    </div>
+                    
+                    <h5 class="mb-3">Prototype Configuration</h5>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="language" class="form-label">Programming Language</label>
+                                <select class="form-select" id="language" name="language">
+                                    <option value="python" selected>Python</option>
+                                    <option value="javascript">JavaScript</option>
+                                    <option value="typescript">TypeScript</option>
+                                    <option value="java">Java</option>
+                                    <option value="go">Go</option>
+                                    <option value="rust">Rust</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="framework" class="form-label">Framework</label>
+                                <select class="form-select" id="framework" name="framework">
+                                    <option value="flask" selected>Flask</option>
+                                    <option value="fastapi">FastAPI</option>
+                                    <option value="django">Django</option>
+                                    <option value="express">Express.js</option>
+                                    <option value="nestjs">NestJS</option>
+                                    <option value="gin">Gin (Go)</option>
+                                    <option value="axum">Axum (Rust)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="features" class="form-label">Desired Features</label>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="features" name="features"
+                                       placeholder="api,web_interface,authentication,database,caching"
+                                       value="api,web_interface">
+                            </div>
+                            <div class="col-md-4">
+                                <button type="button" class="btn btn-outline-secondary btn-sm" onclick="showFeatureHelp()">
+                                    <i class="fas fa-question-circle"></i> Feature Guide
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-text">Enter features separated by commas</div>
+                    </div>
+                    
+                    <div class="accordion mb-3" id="advancedOptions">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingAdvanced">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
+                                        data-bs-target="#collapseAdvanced" aria-expanded="false">
+                                    <i class="fas fa-cog"></i> Advanced Options
+                                </button>
+                            </h2>
+                            <div id="collapseAdvanced" class="accordion-collapse collapse" data-bs-parent="#advancedOptions">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="deployment_target" class="form-label">Deployment Target</label>
+                                                <select class="form-select" id="deployment_target" name="deployment_target">
+                                                    <option value="docker" selected>Docker</option>
+                                                    <option value="kubernetes">Kubernetes</option>
+                                                    <option value="serverless">Serverless</option>
+                                                    <option value="vm">Virtual Machine</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="ai_model" class="form-label">AI Model</label>
+                                                <select class="form-select" id="ai_model" name="ai_model">
+                                                    <option value="gpt-3.5-turbo" selected>GPT-3.5 Turbo</option>
+                                                    <option value="gpt-4">GPT-4</option>
+                                                    <option value="claude-2">Claude 2</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="max_concepts" class="form-label">Max Concepts to Extract</label>
+                                                <input type="number" class="form-control" id="max_concepts" name="max_concepts" 
+                                                       value="20" min="5" max="100">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="prototype_complexity" class="form-label">Prototype Complexity</label>
+                                                <select class="form-select" id="prototype_complexity" name="prototype_complexity">
+                                                    <option value="simple">Simple</option>
+                                                    <option value="moderate" selected>Moderate</option>
+                                                    <option value="complex">Complex</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="include_tests" name="include_tests" checked>
+                                        <label class="form-check-label" for="include_tests">
+                                            Generate unit tests automatically
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="enable_monitoring" name="enable_monitoring" checked>
+                                        <label class="form-check-label" for="enable_monitoring">
+                                            Enable monitoring and logging
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h5 class="mb-3">Initial Research Papers</h5>
+                    <p class="text-muted">You can add research papers after creating the project.</p>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('index') }}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-rocket"></i> Create Project
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Pipeline Overview -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-info-circle"></i> Pipeline Overview</h5>
+            </div>
+            <div class="card-body">
+                <p>Your research-to-product pipeline will include:</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success"></i> <strong>Research Indexing</strong> with LlamaIndex</li>
+                            <li><i class="fas fa-check text-success"></i> <strong>Concept Connection</strong> with Weaviate</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success"></i> <strong>AI Agents</strong> with CrewAI</li>
+                            <li><i class="fas fa-check text-success"></i> <strong>Progress Tracking</strong> with Comet</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="alert alert-info mt-3">
+                    <i class="fas fa-lightbulb"></i> <strong>Tip:</strong> 
+                    After creating your project, add research papers and run the pipeline to automatically 
+                    extract concepts, generate prototypes, and track your progress from research to production.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pipeline Visualization -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5><i class="fas fa-sitemap"></i> Pipeline Flow</h5>
+            </div>
+            <div class="card-body">
+                <div class="pipeline-flow-diagram">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="pipeline-step">
+                            <div class="step-icon bg-primary text-white">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                            <div class="step-title">Research</div>
+                            <div class="step-description">Index papers, extract concepts</div>
+                        </div>
+                        <div class="pipeline-arrow">
+                            <i class="fas fa-arrow-right text-muted"></i>
+                        </div>
+                        <div class="pipeline-step">
+                            <div class="step-icon bg-warning text-white">
+                                <i class="fas fa-link"></i>
+                            </div>
+                            <div class="step-title">Connect</div>
+                            <div class="step-description">Link concepts to implementations</div>
+                        </div>
+                        <div class="pipeline-arrow">
+                            <i class="fas fa-arrow-right text-muted"></i>
+                        </div>
+                        <div class="pipeline-step">
+                            <div class="step-icon bg-info text-white">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <div class="step-title">Prototype</div>
+                            <div class="step-description">Generate working code</div>
+                        </div>
+                        <div class="pipeline-arrow">
+                            <i class="fas fa-arrow-right text-muted"></i>
+                        </div>
+                        <div class="pipeline-step">
+                            <div class="step-icon bg-success text-white">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <div class="step-title">Deploy</div>
+                            <div class="step-description">Production ready</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Feature Help Modal -->
+<div class="modal fade" id="featureModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Feature Guide</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <h6>Available Features:</h6>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <strong>api</strong> - REST API endpoints
+                            </li>
+                            <li class="list-group-item">
+                                <strong>web_interface</strong> - Web-based UI
+                            </li>
+                            <li class="list-group-item">
+                                <strong>authentication</strong> - User authentication
+                            </li>
+                            <li class="list-group-item">
+                                <strong>database</strong> - Database integration
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <strong>caching</strong> - Redis/memory caching
+                            </li>
+                            <li class="list-group-item">
+                                <strong>monitoring</strong> - Health checks & metrics
+                            </li>
+                            <li class="list-group-item">
+                                <strong>websockets</strong> - Real-time communication
+                            </li>
+                            <li class="list-group-item">
+                                <strong>background_tasks</strong> - Async task processing
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="mt-3">Enter features as comma-separated values, e.g., "api,web_interface,authentication"</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.pipeline-flow-diagram {
+    padding: 20px 0;
+}
+
+.pipeline-step {
+    text-align: center;
+    flex: 1;
+}
+
+.step-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin: 0 auto 10px;
+}
+
+.step-title {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.step-description {
+    font-size: 12px;
+    color: #6c757d;
+}
+
+.pipeline-arrow {
+    padding: 0 20px;
+    font-size: 20px;
+}
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function showFeatureHelp() {
+    const modal = new bootstrap.Modal(document.getElementById('featureModal'));
+    modal.show();
+}
+
+// Dynamic framework options based on language selection
+document.getElementById('language').addEventListener('change', function() {
+    const language = this.value;
+    const frameworkSelect = document.getElementById('framework');
+    
+    // Clear current options
+    frameworkSelect.innerHTML = '';
+    
+    const frameworkOptions = {
+        'python': [
+            { value: 'flask', text: 'Flask' },
+            { value: 'fastapi', text: 'FastAPI' },
+            { value: 'django', text: 'Django' }
+        ],
+        'javascript': [
+            { value: 'express', text: 'Express.js' },
+            { value: 'nestjs', text: 'NestJS' },
+            { value: 'koa', text: 'Koa.js' }
+        ],
+        'typescript': [
+            { value: 'nestjs', text: 'NestJS' },
+            { value: 'express', text: 'Express.js' },
+            { value: 'koa', text: 'Koa.js' }
+        ],
+        'java': [
+            { value: 'spring', text: 'Spring Boot' },
+            { value: 'quarkus', text: 'Quarkus' },
+            { value: 'micronaut', text: 'Micronaut' }
+        ],
+        'go': [
+            { value: 'gin', text: 'Gin' },
+            { value: 'fiber', text: 'Fiber' },
+            { value: 'echo', text: 'Echo' }
+        ],
+        'rust': [
+            { value: 'axum', text: 'Axum' },
+            { value: 'warp', text: 'Warp' },
+            { value: 'rocket', text: 'Rocket' }
+        ]
+    };
+    
+    const options = frameworkOptions[language] || frameworkOptions['python'];
+    options.forEach(option => {
+        const opt = document.createElement('option');
+        opt.value = option.value;
+        opt.textContent = option.text;
+        frameworkSelect.appendChild(opt);
+    });
+});
+</script>
+{% endblock %}
